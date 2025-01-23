@@ -4,13 +4,13 @@ import './App.css';
 import Navbar from './Navbar';
 import TextForm from './TextForm';
 import Alert from './Alert';
-//import About from './About';
-// import {
-//   BrowserRouter as Router,
-//   Routes,
-//   Route,
+import About from './About';
+ import {
+   BrowserRouter as Router,
+   Routes,
+   Route
   
-// } from "react-router-dom";
+ } from "react-router-dom";
 
 
 
@@ -44,7 +44,21 @@ function App() {
     }
   }
 
-  const toggleMode = ()=>{
+  const removeBodyClasses=()=>{
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-warning')
+    document.body.classList.remove('bg-danger')
+    document.body.classList.remove('bg-success')
+    
+  }
+
+  const toggleMode = (cls)=>{
+    
+    removeBodyClasses();
+    console.log(cls);
+    document.body.classList.add('bg-'+cls)
+    
     if(mode === 'light'){
       setMode('dark')
       document.body.style.backgroundColor='#042743'
@@ -58,21 +72,16 @@ function App() {
   }
   return (
    <>
-   {/* <Router>
-  <Navbar title="My App"/>
-  
-  <Routes>
-      <Route path='/about' element={<About />}/>   
-      <Route path='/' element={
-  </Routes>
-  </div>
-  </Router> */}
-  <Navbar title="My App" mode={mode} toggleMode={toggleMode} greenMode={greenMode}/>
+   <Router>
+  <Navbar title="My App" mode={mode} toggleMode={toggleMode} greenMode={greenMode} aboutText='About us'/>
   <Alert alert={alert}/>
   <div className="container my-3">
-  <TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode} greenMode={greenMode}/>
+  <Routes>
+      <Route path='/about' element={<About mode={mode} />}/>   
+      <Route path='/' element={ <TextForm showAlert={showAlert} heading="Try TextUtils- Word counter, Character counter, Remove extra spaces" mode={mode} greenMode={greenMode}/>}/>
+  </Routes>
   </div>
-  
+  </Router>
    </>
 
   );
